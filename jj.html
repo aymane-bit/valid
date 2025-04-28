@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>❤️</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fff0f5;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        #loadingScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #fff0f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 9999;
+            font-size: 24px;
+            color: #e91e63;
+            font-weight: bold;
+        }
+
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff4081;
+            animation: float 4s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        #mainContent {
+            display: none;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .container {
+            background: linear-gradient(145deg, #ffe0e6, #ffffff);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            animation: fadeIn 2s ease forwards;
+        }
+
+        h1 {
+            color: #d81b60;
+            margin-bottom: 20px;
+            font-size: 32px;
+        }
+
+        .cat-image {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.3s, border 0.3s;
+            border: 5px solid #f8bbd0;
+        }
+
+        .cat-image:hover {
+            transform: scale(1.05);
+            border-color: #ec407a;
+        }
+
+        .click-me {
+            font-size: 24px;
+            color: #d81b60;
+            margin-top: 15px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        .message {
+            font-size: 28px;
+            color: #e91e63;
+            margin-top: 20px;
+            font-weight: bold;
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loadingScreen">
+        Loading... ❤️
+    </div>
+
+    <div class="hearts" id="hearts"></div>
+
+    <div id="mainContent">
+        <div class="container">
+            <h1>For You And Only You ❤️</h1>
+
+            <img src="https://cataas.com/cat/cute" alt="Cute Cat" class="cat-image" id="catImage"
+                onerror="this.src='https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492_640.jpg'">
+            <div class="click-me">Click The Cat Slowly PLZ!</div>
+
+            <div class="message" id="loveMessage">
+                Relax, my princess. Life is beautiful when you smile. 🌟 ❤️
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            document.getElementById('loadingScreen').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+        };
+
+        const catImage = document.getElementById('catImage');
+        const loveMessage = document.getElementById('loveMessage');
+        const heartsContainer = document.getElementById('hearts');
+
+        catImage.addEventListener('click', function () {
+            document.querySelector('.click-me').style.display = 'none';
+            loveMessage.style.display = 'block';
+            catImage.src = 'https://cdn.pixabay.com/photo/2014/04/13/20/49/cat-323262_640.jpg';
+            catImage.style.borderColor = '#e91e63';
+            createHearts();
+            playMusic();
+        });
+
+        function createHearts() {
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '❤️';
+                    heart.classList.add('heart');
+
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                    heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                    heart.style.animationDelay = (Math.random() * 2) + 's';
+
+                    heartsContainer.appendChild(heart);
+
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 5000);
+                }, i * 100);
+            }
+        }
+
+        function playMusic() {
+            const audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
+            audio.volume = 0.3;
+            audio.play().catch(e => console.log("Audio play prevented:", e));
+        }
+    </script>
+
+</body>
+</html>
